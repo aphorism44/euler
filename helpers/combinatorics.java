@@ -40,6 +40,41 @@ public class combinatorics {
 		}
 	}
 	
+		//takes in a string and returns an array of all possible permutations of its letters
+		public static ArrayList<String> getStringPermutations(String str) {
+			ArrayList<Character> strArr = new ArrayList<Character>();
+			for (char c: str.toCharArray())
+				strArr.add(c);
+			ArrayList<String> permutations = new ArrayList<String>();
+			//base case 1
+			if (strArr.size() < 2) {
+				permutations.add(str);
+				return permutations;
+			//base case 2
+			} else if (strArr.size() == 2) {
+				String str1 = new StringBuilder().append(strArr.get(0)).append(strArr.get(1)).toString();
+				String str2 = new StringBuilder().append(strArr.get(1)).append(strArr.get(0)).toString();
+				permutations.add(str1);
+				permutations.add(str2);
+				return permutations;
+			} else {
+				//recursive relation
+				for (int i = 0; i < strArr.size(); i++) {
+					ArrayList<Character> tempStrArr = new ArrayList<Character>(strArr);
+					char currStr = tempStrArr.remove(i);
+					StringBuilder tempBldr = new StringBuilder();
+					for (char c: tempStrArr)
+						tempBldr.append(c);
+					ArrayList<String> newPerms = getStringPermutations(tempBldr.toString());
+					for (String s: newPerms) {
+						String newStr = currStr + s;
+						permutations.add(newStr);
+					}
+				}
+				return permutations;
+			}
+		}
+	
 	//takes in a number and returns an array of all possible rotations of its digits
 	//(a rotation of 197 = {197, 971, 719}
 	public static ArrayList<Integer> getIntRotations(int num) {
