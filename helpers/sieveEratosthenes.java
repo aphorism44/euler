@@ -34,7 +34,11 @@ public class sieveEratosthenes {
 	}
 	
 	public static boolean isPrime(int n) {
-		int sqrt = (int) Math.floor(Math.sqrt(n)); 
+		
+		if (n < 2)
+			return false;
+		
+		int sqrt = (int) Math.ceil(Math.sqrt(n + 1)); ;
 		ArrayList<Integer> divPrimes = getPrimes(sqrt);
 		
 		for (int p: divPrimes)

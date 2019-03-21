@@ -91,4 +91,17 @@ public class combinatorics {
 		
 		return rotations;
 	}
+	
+	//takes in string and checks if it's a palindrome
+	public static boolean isStringPalindrome(String str) {
+		int begin = 0;
+		int end = str.length() - 1;
+		while (begin < end) {
+			if (str.charAt(begin) != str.charAt(end))
+				return false;
+			begin++;
+			end--;
+		}
+		return true;
+	}
 }
