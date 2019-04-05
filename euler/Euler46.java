@@ -1,0 +1,32 @@
+package euler;
+
+
+/*
+It was proposed by Christian Goldbach that every odd composite number can be written as the sum of a prime and twice a square.
+
+9 = 7 + 2*1^2
+15 = 7 + 2*2^2
+21 = 3 + 2*3^2
+25 = 7 + 2*3^2
+27 = 19 + 2*2^2
+33 = 31 + 2*1^2
+
+It turns out that the conjecture was false.
+
+What is the smallest odd composite that cannot be written as the sum of a prime and twice a square?
+ 
+ NOTE - composite number is a positive integer that can be formed by multiplying two smaller positive 
+ integers (where one of the integers isn't 1). Equivalently, it is a positive integer that has at least one divisor other than 1 and itself.
+ 
+ */
+
+
+public class Euler46 {
+
+	public static void main(String[] args) {
+		
+	}
+
+
+	
+}
