@@ -16,6 +16,8 @@ public class Euler40 {
 			product *= n;
 		}
 		System.out.println(product);
+		
+		
 	}
 	
 }
