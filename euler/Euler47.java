@@ -1,6 +1,7 @@
 package euler;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import helpers.sieveEratosthenes;
 
@@ -8,14 +9,14 @@ import helpers.sieveEratosthenes;
 
 The first two consecutive numbers to have two distinct prime factors are:
 
-14 = 2 Ã— 7
-15 = 3 Ã— 5
+14 = 2 × 7
+15 = 3 × 5
 
 The first three consecutive numbers to have three distinct prime factors are:
 
-644 = 2^2 Ã— 7 Ã— 23
-645 = 3 Ã— 5 Ã— 43
-646 = 2 Ã— 17 Ã— 19.
+644 = 2² × 7 × 23
+645 = 3 × 5 × 43
+646 = 2 × 17 × 19.
 
 Find the first four consecutive integers to have four distinct prime factors each. What is the first of these numbers?
 
@@ -24,67 +25,42 @@ Find the first four consecutive integers to have four distinct prime factors eac
 public class Euler47 { 
 	
 	public static void main(String[] args) {
-		int max = 20;
-		int targetRun = 2;
+		int max = 1000000;
+		int targetRun = 4;
+		int targetConsecutive = 4;
 		
 		ArrayList<Integer> primes = sieveEratosthenes.getPrimes(max);
-		HashSet<HashSet<Integer>> currentRunFactors = new HashSet<HashSet<Integer>>();
+		HashMap<Integer, HashSet<Integer>> currentRunFactors = new HashMap<Integer, HashSet<Integer>>();
+		int primeSize = primes.size();
 		for (int i = 4; i < max; i++) {
 			//factorize with primes
 			HashSet<Integer> currentPrimeFactorization = new HashSet<Integer>();
-			int index = 0;
-			int n = i;
-			while (n > 1) {
-				int prime = primes.get(index);
-				int currentFactor = 1;
-				while (n % prime == 0) {
-					currentFactor *= prime;
-					n /= prime;
+			int temp = i;
+			int primeIndex = 0;
+			while (primeIndex < primeSize && temp > 1) {
+				int currentPrime = primes.get(primeIndex);
+				while (temp % currentPrime == 0) {
+					currentPrimeFactorization.add(currentPrime);
+					temp /= currentPrime;
 				}
-				if (currentFactor > 1)
-					currentPrimeFactorization.add(currentFactor);
-				index++;
+				primeIndex++;
 			}
-			System.out.println(i + " has the following prime factors:");
-			for (int cpf: currentPrimeFactorization)
-				System.out.print(cpf + " ");
-			System.out.println();
+			//System.out.println(i + " has " + currentPrimeFactorization.size() + " unique prime factor(s): ");
+			//currentPrimeFactorization.stream().forEach(p -> System.out.print(p + " ")); 
+			//System.out.println();
 			
-			//check if it has unique factors from last ones
-			boolean unique = true;
-			if (currentRunFactors.size() == 0 && currentPrimeFactorization.size() > 1) {
-				break;
-			} else if (currentPrimeFactorization.size() > 1) {
-				for (HashSet<Integer> hs:  currentRunFactors) {
-					if (hs.size() == currentPrimeFactorization.size()) {
-						for (int factor: currentPrimeFactorization) {
-							if (hs.contains(factor)) {
-								unique = false;
-								break;
-							}
-						}
-					} else {
-						unique = false;
-						break;
-					}
-				}
-			} else {
-				unique = false;
-			}
-			
-			System.out.println("unique: " + unique);
-			if (unique)
-				currentRunFactors.add(currentPrimeFactorization);
+			if (currentPrimeFactorization.size() == targetRun)
+				currentRunFactors.put(i, currentPrimeFactorization);
 			else
 				currentRunFactors.clear();
 			
-			
-			if (currentRunFactors.size() == targetRun) {
-				System.out.println("found answer: " + i);
+			if (currentRunFactors.size() == targetConsecutive) {
+				currentRunFactors.forEach((key, value) -> System.out.println(key + ", " + value));
 				break;
 			}
+			
+			
 		}
-		
 		
 	}
 }
